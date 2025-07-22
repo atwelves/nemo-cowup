@@ -55,14 +55,17 @@
       rn_vice       =   0.5           !        prescribed ice v-velocity
    rn_ishlat        =   2.            !  lbc : free slip (0) ; partial slip (0-2) ; no slip (2) ; strong slip (>2)
    ln_landfast_L16  = .false.         !  landfast: parameterization from Lemieux 2016
-   ln_landfast_home = .false.         !  landfast: parameterization from "home made"
-      rn_depfra     =   0.125         !        fraction of ocean depth that ice must reach to initiate landfast
-                                      !          recommended range: [0.1 ; 0.25] - L16=0.125 - home=0.15
-      rn_icebfr     =  15.            !        ln_landfast_L16:  maximum bottom stress per unit volume [N/m3]
-                                      !        ln_landfast_home: maximum bottom stress per unit area of contact [N/m2]
-                                      !          recommended range: ?? L16=15 - home=10
-      rn_lfrelax    =   1.e-5         !        relaxation time scale to reach static friction [s-1]
-      rn_tensile    =   0.2           !        ln_landfast_L16: isotropic tensile strength
+      rn_lf_depfra  =   0.125         !        fraction of ocean depth that ice must reach to initiate landfast
+                                      !          recommended range: [0.1 ; 0.25]
+      rn_lf_bfr     =  15.            !        maximum bottom stress per unit volume [N/m3]
+      rn_lf_relax   =   1.e-5         !        relaxation time scale to reach static friction [s-1]
+      rn_lf_tensile =   0.05          !        isotropic tensile strength [0-0.5??]
+
+   cn_dir           = './'      !  root directory for the grounded icebergs mask data location
+   !___________!________________!___________________!___________!_____________!________!___________!__________!__________!_______________!
+   !           !  file name     ! frequency (hours) ! variable  ! time interp.!  clim  ! 'yearly'/ ! weights  ! rotation ! land/sea mask !
+   !           !                !  (if <0  months)  !   name    !   (logical) !  (T/F) ! 'monthly' ! filename ! pairing  !    filename   !
+   sn_icbmsk       = 'NOT USED' ,       -12.        , 'icb_mask',   .false.   , .true. , 'yearly'  , ''       , ''       , ''
 /
 !------------------------------------------------------------------------------
 &namdyn_rdgrft  !   Ice ridging/rafting
@@ -71,7 +74,15 @@
    ln_str_H79       = .true.          !  ice strength param.: Hibler_79   => P = pstar*<h>*exp(-c_rhg*A)
       rn_pstar      =   2.0e+04       !     ice strength thickness parameter [N/m2]
       rn_crhg       =   20.0          !     ice strength conc. parameter (-)
+   ln_str_R75       = .false.         !  ice strength param.: Rothrock_75 => P = fn of potential energy
+      rn_pe_rdg     =  17.0           !     coef accouting for frictional dissipation
+   ln_str_CST       = .false.         !  ice strength param.: Constant
+      rn_str        =   0.0           !     ice strength value
+   ln_str_smooth    = .true.          !  spatial smoothing of the ice strength
                    ! -- ice_rdgrft -- !
+   ln_distf_lin     = .true.          !  redistribution function of ridged ice: linear (Hibler 1980)
+   ln_distf_exp     = .false.         !  redistribution function of ridged ice: exponential => not coded yet
+      rn_murdg      =   3.0           !     e-folding scale of ridged ice (m**.5)
    rn_csrdg         =   0.5           !  fraction of shearing energy contributing to ridging
               ! -- ice_rdgrft_prep -- !
    ln_partf_lin     = .false.         !  Linear ridging participation function (Thorndike et al, 1975)
@@ -111,7 +122,11 @@
 &namsbc         !   Ice surface boundary conditions
 !------------------------------------------------------------------------------
    rn_cio           =   5.0e-03       !  ice-ocean drag coefficient (-)
-   rn_blow_s        =   0.66          !  mesure of snow blowing into the leads
+   nn_snwfra        =   2             !  calculate the fraction of ice covered by snow (for zdf and albedo)
+                                      !     = 0  fraction = 1 (if snow) or 0 (if no snow)
+                                      !     = 1  fraction = 1-exp(-0.2*rhos*hsnw) [MetO formulation]
+                                      !     = 2  fraction = hsnw / (hsnw+0.02)    [CICE formulation]
+   rn_snwblow       =   0.66          !  mesure of snow blowing into the leads
                                       !     = 1 => no snow blowing, < 1 => some snow blowing
    nn_flxdist       =  -1             !  Redistribute heat flux over ice categories
                                       !     =-1  Do nothing (needs N(cat) fluxes)
@@ -120,6 +135,9 @@
                                       !     = 2  Redistribute a single flux over categories
    ln_cndflx        = .false.         !  Use conduction flux as surface boundary conditions (i.e. for Jules coupling)
       ln_cndemulate = .false.         !     emulate conduction flux (if not provided in the inputs)
+   nn_qtrice        =   0             !  Solar flux transmitted thru the surface scattering layer:
+                                      !     = 0  Grenfell and Maykut 1977 (depends on cloudiness and is 0 when there is snow)
+                                      !     = 1  Lebrun 2019 (equals 0.3 anytime with different melting/dry snw conductivities)
 /
 !------------------------------------------------------------------------------
 &namthd         !   Ice thermodynamics
@@ -177,35 +195,58 @@
 !------------------------------------------------------------------------------
 &namthd_pnd     !   Melt ponds
 !------------------------------------------------------------------------------
-   ln_pnd_H12       = .false.         !  activate evolutive melt ponds (from Holland et al 2012)
-   ln_pnd_CST       = .false.         !  activate constant  melt ponds
-      rn_apnd       =   0.2           !     prescribed pond fraction, at Tsu=0 degC
-      rn_hpnd       =   0.05          !     prescribed pond depth,    at Tsu=0 degC
-   ln_pnd_alb       = .false.         !  melt ponds affect albedo or not
+      ln_pnd            = .false.         !  activate melt ponds or not
+      ln_pnd_TOPO    = .false.        !  topographic melt ponds
+      ln_pnd_LEV     = .false.         !  level ice melt ponds
+         rn_apnd_min =   0.15         !     minimum meltwater fraction contributing to pond growth (TOPO and LEV)
+         rn_apnd_max =   0.85         !     maximum meltwater fraction contributing to pond growth (TOPO and LEV)
+         rn_pnd_flush=   0.1          !     pond flushing efficiency (tuning parameter) (LEV)
+      ln_pnd_CST     = .false.        !  constant  melt ponds
+         rn_apnd     =   0.2          !     prescribed pond fraction, at Tsu=0 degC
+         rn_hpnd     =   0.05         !     prescribed pond depth,    at Tsu=0 degC
+      ln_pnd_lids    = .true.         !  frozen lids on top of the ponds (only for ln_pnd_LEV)
+      ln_pnd_alb     = .true.         !  effect of melt ponds on ice albedo
 /
 !------------------------------------------------------------------------------
 &namini         !   Ice initialization
 !------------------------------------------------------------------------------
    ln_iceini        = .true.          !  activate ice initialization (T) or not (F)
-   ln_iceini_file   = .false.         !  netcdf file provided for initialization (T) or not (F)
-   rn_thres_sst     =   2.0           !  max delta temp. above Tfreeze with initial ice = (sst - tfreeze)
-   rn_hts_ini_n     =   0.3           !  initial real snow thickness (m), North
-   rn_hts_ini_s     =   0.3           !        "            "             South
-   rn_hti_ini_n     =   3.0           !  initial real ice thickness  (m), North
+   nn_iceini_file   =   0             !     0 = Initialise sea ice based on SSTs
+                                      !     1 = Initialise sea ice from single category netcdf file
+                                      !     2 = Initialise sea ice from multi category restart file
+   rn_thres_sst     =   2.0           !  max temp. above Tfreeze with initial ice = (sst - tfreeze)
+   rn_hti_ini_n     =   3.0           !  initial ice thickness       (m), North
    rn_hti_ini_s     =   1.0           !        "            "             South
+   rn_hts_ini_n     =   0.3           !  initial snow thickness      (m), North
+   rn_hts_ini_s     =   0.3           !        "            "             South
    rn_ati_ini_n     =   0.9           !  initial ice concentration   (-), North
    rn_ati_ini_s     =   0.9           !        "            "             South
    rn_smi_ini_n     =   6.3           !  initial ice salinity     (g/kg), North
    rn_smi_ini_s     =   6.3           !        "            "             South
-   rn_tmi_ini_n     = 270.            !  initial ice/snw temperature (K), North
+   rn_tmi_ini_n     = 270.            !  initial ice temperature     (K), North
    rn_tmi_ini_s     = 270.            !        "            "             South
-
-   sn_hti = 'Ice_initialization'    , -12 ,'hti'   ,  .false.  , .true., 'yearly'  , '' , '', ''
-   sn_hts = 'Ice_initialization'    , -12 ,'hts'   ,  .false.  , .true., 'yearly'  , '' , '', ''
-   sn_ati = 'Ice_initialization'    , -12 ,'ati'   ,  .false.  , .true., 'yearly'  , '' , '', ''
-   sn_tsu = 'Ice_initialization'    , -12 ,'tsu'   ,  .false.  , .true., 'yearly'  , '' , '', ''
-   sn_tmi = 'Ice_initialization'    , -12 ,'tmi'   ,  .false.  , .true., 'yearly'  , '' , '', ''
-   sn_smi = 'Ice_initialization'    , -12 ,'smi'   ,  .false.  , .true., 'yearly'  , '' , '', ''
+   rn_tsu_ini_n     = 270.            !  initial surface temperature (K), North
+   rn_tsu_ini_s     = 270.            !        "            "             South
+   rn_tms_ini_n     = 270.            !  initial snw temperature     (K), North
+   rn_tms_ini_s     = 270.            !        "            "             South
+   rn_apd_ini_n     =   0.2           !  initial pond fraction       (-), North
+   rn_apd_ini_s     =   0.2           !        "            "             South
+   rn_hpd_ini_n     =   0.05          !  initial pond depth          (m), North
+   rn_hpd_ini_s     =   0.05          !        "            "             South
+   rn_hld_ini_n     =   0.0           !  initial pond lid depth      (m), North
+   rn_hld_ini_s     =   0.0           !        "            "             South
+   ! -- for nn_iceini_file = 1
+   sn_hti = 'Ice_initialization'    , -12. ,'hti'   ,  .false.  , .true., 'yearly'  , '' , '', ''
+   sn_hts = 'Ice_initialization'    , -12. ,'hts'   ,  .false.  , .true., 'yearly'  , '' , '', ''
+   sn_ati = 'Ice_initialization'    , -12. ,'ati'   ,  .false.  , .true., 'yearly'  , '' , '', ''
+   sn_smi = 'Ice_initialization'    , -12. ,'smi'   ,  .false.  , .true., 'yearly'  , '' , '', ''
+   sn_tmi = 'Ice_initialization'    , -12. ,'tmi'   ,  .false.  , .true., 'yearly'  , '' , '', ''
+   sn_tsu = 'Ice_initialization'    , -12. ,'tsu'   ,  .false.  , .true., 'yearly'  , '' , '', ''
+   sn_tms = 'NOT USED'              , -12. ,'tms'   ,  .false.  , .true., 'yearly'  , '' , '', ''
+   !      melt ponds (be careful, sn_apd is the pond concentration (not fraction), so it differs from rn_apd)
+   sn_apd = 'NOT USED'              , -12. ,'apd'   ,  .false.  , .true., 'yearly'  , '' , '', ''
+   sn_hpd = 'NOT USED'              , -12. ,'hpd'   ,  .false.  , .true., 'yearly'  , '' , '', ''
+   sn_hld = 'NOT USED'              , -12. ,'hld'   ,  .false.  , .true., 'yearly'  , '' , '', ''
    cn_dir='./'
 /
 !------------------------------------------------------------------------------

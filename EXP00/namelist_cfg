@@ -39,7 +39,7 @@
 /
 &namdom        !   space and time domain (bathymetry, mesh, timestep)
 !-----------------------------------------------------------------------
-   rn_rdt      =  90.    !  time step for the dynamics (and tracer if nn_acc=0)
+   rn_Dt      =  90.    !  time step for the dynamics (and tracer if nn_acc=0)
    rn_atfp     =    0.1    !  asselin time filter parameter
    ln_crs      = .false.       !  Logical switch for coarsening module
 /
@@ -103,7 +103,6 @@
    ln_NCAR     = .true.   ! "NCAR"      algorithm   (Large and Yeager 2008)
    rn_zqt      = 2.        !  Air temperature & humidity reference height (m)
    cn_dir      = './forcing/'      !  root directory for the bulk data location
-
    !___________!_________________________!___________________!___________!_____________!________!___________!______________________________________!__________!_______________!
    !           !  file name              ! frequency (hours) ! variable  ! time interp.!  clim  ! 'yearly'/ !       weights filename               ! rotation ! land/sea mask !
    !           !                         !  (if <0  months)  !   name    !   (logical) !  (T/F) ! 'monthly' !                                      ! pairing  !    filename   !
@@ -174,24 +173,6 @@
    rn_shlat    =  0        !  shlat = 0  !  0 < shlat < 2  !  shlat = 2  !  2 < shlat
 /
 !-----------------------------------------------------------------------
-&nam_tide      !   tide parameters                                      (default: OFF)
-!-----------------------------------------------------------------------
-   ln_tide     = .false.   ! Activate tides
-   ln_tide_pot   = .false. !  use tidal potential forcing
-
-   clname(1)     =   'M2'   !  name of constituent
-   clname(2)     =   'K1'   !  name of constituent
-   clname(3)     =   'K2'   !  name of constituent
-   clname(4)     =   'M4'   !  name of constituent
-   clname(5)     =   'P1'   !  name of constituent
-   clname(6)     =   'O1'   !  name of constituent
-   clname(7)     =   'S2'   !  name of constituent
-   clname(8)     =   'Q1'   !  name of constituent
-   clname(9)     =   'N2'   !  name of constituent
-   clname(10)    =   'MN4'  !  name of constituent
-   clname(11)    =   'MS4'  !  name of constituent
-/
-!-----------------------------------------------------------------------
 &nambdy        !  unstructured open boundaries                          (default: OFF)
 !-----------------------------------------------------------------------
    ln_bdy         = .true.   !  Use unstructured open boundaries
@@ -214,18 +195,11 @@
    cn_ice        =  'none'    !
    nn_ice_dta    =  0         !  = 0, bdy data are equal to the initial state
    !                          !  = 1, bdy data are read in 'bdydata   .nc' files
-   rn_ice_tem    = 272.7       !  si3 only: arbitrary temperature of incoming sea ice
-   rn_ice_sal    = 0.1        !  si3 only:      --   salinity           --
-   rn_ice_age    = 30.        !  si3 only:      --   age                --
-   !
    ln_tra_dmp    =.false.     !  open boudaries conditions for tracers
    ln_dyn3d_dmp  =.false.     !  open boundary condition for baroclinic velocities
    rn_time_dmp   =  1.        !  Damping time scale in days
    rn_time_dmp_out = 1.       !  Outflow damping time scale
    nn_rimwidth   = 1          !  width of the relaxation zone
-   ln_vol        = .false.    !  total volume correction (see nn_volctl parameter)
-   nn_volctl     =  1         !  = 0, the total water flux across open boundaries is zero
-   nb_jpk_bdy    = -1         ! number of levels in the bdy data (set < 0 if consistent with planned run)
 /
 !-----------------------------------------------------------------------
 &nambdy_dta    !  open boundaries - external data
@@ -244,11 +218,8 @@
    bn_sal  =    'bdy_T_gof'       ,      24        , 'vosaline' ,     .true.     , .false. ,  'daily'  ,    ''    ,   ''     , ''
 /
 !-----------------------------------------------------------------------
-&nambdy_tide   !  tidal forcing at open boundaries
-!-----------------------------------------------------------------------
-   filtide          = 'bdytide_'   !  file name root of tidal forcing files
-/
 &nambdy_index
+!-----------------------------------------------------------------------
     ctypebdy = 'S' ! 
     nbdyind  = 3   !
     nbdybeg  = 110 ! 
@@ -379,7 +350,7 @@
 !-----------------------------------------------------------------------
    ln_dynspg_ts = .true.   ! split-explicit free surface
    ln_bt_auto   = .true.  ! Number of sub-step defined from:
-   nn_baro      = 50       ! =F : the number of sub-step in rn_rdt seconds
+   nn_e      = 50       ! =F : the number of sub-step in rn_rdt seconds
 /
 !-----------------------------------------------------------------------
 &namdyn_ldf    !   lateral diffusion on momentum                        (default: NO selection)
@@ -490,18 +461,6 @@
 !-----------------------------------------------------------------------
    jpni        =  -1 !  jpni   number of processors following i (set automatically if < 1)
    jpnj        =  -1 !  jpnj   number of processors following j (set automatically if < 1)
-/
-!-----------------------------------------------------------------------
-&namctl        !   Control prints                                       (default: OFF)
-!-----------------------------------------------------------------------
-       sn_cfctl%l_config = .TRUE.     ! IF .true. then control which reports are written with the following
-       sn_cfctl%l_runstat = .TRUE. ! switches and which areas produce reports with the proc integer settings.
-       sn_cfctl%l_trcstat = .FALSE. ! The default settings for the proc integers should ensure
-       sn_cfctl%l_oceout  = .FALSE. ! that  all areas report.
-       sn_cfctl%l_layout  = .FALSE. !
-       sn_cfctl%l_mppout  = .TRUE. !
-       sn_cfctl%l_mpptop  = .TRUE. !
-       ln_timing   = .true.   !  timing by routine write out in timing.output file
 /
 !-----------------------------------------------------------------------
 &namsto        ! Stochastic parametrization of EOS                      (default: OFF)
