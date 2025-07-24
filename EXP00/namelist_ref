@@ -624,6 +624,7 @@
 !-----------------------------------------------------------------------
 &nambdy_dta    !  open boundaries - external data                       (see nam_bdy)
 !-----------------------------------------------------------------------
+   ln_zinterp = .false.
    ln_full_vel = .false.      !  ???
 
    cn_dir      = 'bdydta/'    !  root directory for the BDY data location
