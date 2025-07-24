@@ -18,7 +18,7 @@
        </file>
       </file_group>
 
-      <file_group id="1h" output_freq="1h"  output_level="10" enabled=".TRUE."> <!-- 1h files -->
+      <file_group id="1h" output_freq="1h"  output_level="10" enabled=".FALSE."> <!-- 1h files -->
        <file id="file11" name_suffix="_grid_T" description="ocean T grid variables" enabled=".true." >
           <field field_ref="sst"  />
           <field field_ref="sss"  />
@@ -50,7 +50,7 @@
 
       </file_group>
 
-      <file_group id="6h" output_freq="6h"  output_level="10" enabled=".TRUE."> <!-- 6h files -->
+      <file_group id="6h" output_freq="6h"  output_level="10" enabled=".FALSE."> <!-- 6h files -->
 
        <file id="file12" name_suffix="_grid_T" description="ocean T grid variables" enabled=".true." >
           <field field_ref="toce" />
