@@ -14,7 +14,7 @@
 &namtrc_run      !   run information
 !-----------------------------------------------------------------------
    ln_top_euler  = .true.   !  use Euler time-stepping for TOP
-   ln_rsttr      = .true.   !  start from a restart file (T) or not (F)
+   ln_rsttr      = .false.   !  start from a restart file (T) or not (F)
    nn_rsttr      =   0       !  restart control = 0 initial time step is not compared to the restart file value
                              !                  = 1 do not use the value in the restart file
                              !                  = 2 calendar parameters read in the restart file
@@ -40,32 +40,32 @@
    ln_trcdta     =  .false.  !  Initialisation from data input file (T) or not (F)
    ln_trcdmp     =  .false.  !  add a damping termn (T) or not (F)
    ln_trcdmp_clo =  .false.  !  damping term (T) or not (F) on closed seas
-   ln_trcbc      =  .true.  !  Surface, Lateral or Open Boundaries conditions
+   ln_trcbc      =  .false.  !  Surface, Lateral or Open Boundaries conditions
    ln_trcais     =  .false.  !  Antarctic Ice Sheet nutrient supply
    !
    jp_dia3d      = 0         ! Number of 3D diagnostic variables
    jp_dia2d      = 0         ! Number of 2D diagnostic variables
    !_____________!___________!_________________________________________!____________!________________!
    !             !    name   !           title of the field            !   units    ! init from file !  sbc    !     cbc  !    obc  !   ais 
-   sn_tracer(1)   = 'ergom_t_n2' , 'n2',                                     ' '  ,       .true.  ,     .false. , .false. , .false. , .false.
-   sn_tracer(2)   = 'ergom_t_o2' , 'o2',                                     ' '  ,       .true.  ,     .false. , .true. , .true. , .false.
-   sn_tracer(3)   = 'ergom_t_dic' , 'dic',                                   ' '  ,       .true.  ,     .false. , .true.  , .true.  , .false.   
-   sn_tracer(4)   = 'ergom_t_nh4' , 'nh4',                                   ' '  ,       .true.  ,     .true.  , .true.  , .true.  , .false.
-   sn_tracer(5)   = 'ergom_t_no3' , 'no3',                                   ' '  ,       .true.  ,     .true.  , .true.  , .true.  , .false.
-   sn_tracer(6)   = 'ergom_t_po4' , 'po4',                                   ' '  ,       .true.  ,     .false. , .true.  , .true.  , .false.
-   sn_tracer(7)   = 'ergom_t_spp' , 'spp',                                   ' '  ,       .true.  ,     .false. , .true.  , .true.  , .false.
-   sn_tracer(8)   = 'ergom_t_zoo' , 'zoo',                                   ' '  ,       .true.  ,     .false. , .true.  , .true.  , .false.
-   sn_tracer(9)   = 'ergom_t_h2s' ,'h2s',                                    ' '  ,       .true.  ,     .false. , .false. , .false. , .false.
-   sn_tracer(10)   = 'ergom_t_sul' ,'sul',                                   ' '  ,       .true.  ,     .false. , .false. , .false. , .false.
-   sn_tracer(11)   = 'ergom_t_alk' ,'alk',                                   ' '  ,       .true.  ,     .false. , .true.  , .true.  , .false.
-   sn_tracer(12)   = 'ergom_t_fe3plus' ,'fe3plus',                           ' '  ,       .true.  ,     .false. , .true.  , .true.  , .false.
-   sn_tracer(13)   = 'ergom_t_ipw' ,'ipw',                                   ' '  ,       .true.  ,     .false. , .false. , .false. , .false.
-   sn_tracer(14)   = 'ergom_t_lpp' , 'lpp',                                  ' '  ,       .true.  ,     .false. , .true.  , .true.  , .false.   
-   sn_tracer(15)   = 'ergom_t_cya' ,'cya',                                   ' '  ,       .true.  ,     .false. , .true.  , .true.  , .false.
-   sn_tracer(16)   = 'ergom_t_det' ,'det',                                   ' '  ,       .true.  ,     .false. , .true.  , .true.  , .false.
-   sn_tracer(17)   = 'ergom_t_si' ,'si',                                     ' '  ,       .true.  ,     .false. , .false. , .true. , .false.
-   sn_tracer(18)   = 'ergom_t_detsi' ,'detsi',                               ' '  ,       .true.  ,     .false. , .true.  , .true.  , .false.
-   sn_tracer(19)   = 'ergom_t_cdom' ,'cdom',                                 ' '  ,       .true.  ,     .false. , .true. , .false. , .false. 
+   sn_tracer(1)   = 'ergom_t_n2' , 'n2',                                     ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
+   sn_tracer(2)   = 'ergom_t_o2' , 'o2',                                     ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
+   sn_tracer(3)   = 'ergom_t_dic' , 'dic',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.   
+   sn_tracer(4)   = 'ergom_t_nh4' , 'nh4',                                   ' '  ,       .false.  ,     .false.  , .false.  , .false.  , .false.
+   sn_tracer(5)   = 'ergom_t_no3' , 'no3',                                   ' '  ,       .false.  ,     .false.  , .false.  , .false.  , .false.
+   sn_tracer(6)   = 'ergom_t_po4' , 'po4',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(7)   = 'ergom_t_spp' , 'spp',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(8)   = 'ergom_t_zoo' , 'zoo',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(9)   = 'ergom_t_h2s' ,'h2s',                                    ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
+   sn_tracer(10)   = 'ergom_t_sul' ,'sul',                                   ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
+   sn_tracer(11)   = 'ergom_t_alk' ,'alk',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(12)   = 'ergom_t_fe3plus' ,'fe3plus',                           ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(13)   = 'ergom_t_ipw' ,'ipw',                                   ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
+   sn_tracer(14)   = 'ergom_t_lpp' , 'lpp',                                  ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.   
+   sn_tracer(15)   = 'ergom_t_cya' ,'cya',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(16)   = 'ergom_t_det' ,'det',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(17)   = 'ergom_t_si' ,'si',                                     ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
+   sn_tracer(18)   = 'ergom_t_detsi' ,'detsi',                               ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(19)   = 'ergom_t_cdom' ,'cdom',                                 ' '  ,       .false.  ,     .false. , .false. , .false. , .false. 
 
 /
 !-----------------------------------------------------------------------
