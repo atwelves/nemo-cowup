@@ -3,7 +3,7 @@
 #SBATCH --account=project_2002251
 #SBATCH --partition=fmi
 #SBATCH --time=72:00:00
-#SBATCH --mem-per-cpu=15G
+#SBATCH --mem-per-cpu=10G
 #SBATCH -o stdout.log
 #SBATCH -e stderr.log
 #SBATCH --ntasks=100

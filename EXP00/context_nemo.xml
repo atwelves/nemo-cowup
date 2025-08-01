@@ -16,10 +16,10 @@
     <field_definition src="./field_def_custom.xml"/>   -->
 
 <!-- Files definition -->
-    <file_definition src="./file_def_nemo-oce.xml"/>     <!--  NEMO ocean dynamics                     -->
+    <!--file_definition src="./file_def_nemo-oce.xml"/>     !--<!--  NEMO ocean dynamics                     -->
     <!--    <file_definition src="./file_def_nemo-ice.xml"/>     !--<!--  NEMO ocean dynamics                     -->
 
-<!--file_definition src="./file_def_nemo-fabm.xml"/>    !--<!--    FABM ocean dynamics                     -->
+    <file_definition src="./file_def_nemo-fabm.xml"/>    <!--    FABM ocean dynamics                     -->
 
     <!-- 
 ============================================================================================================
