@@ -1,15 +1,5 @@
 # nemo-cowup
 
-New branch of nemo-gof repository, as part of CoWup project.
-
-## FABM
-
-## ERGOM
-
-## Extracting trajectories
-
-The new version of Xios/NEMO does not allow for extraction (on some machines).  Hence this repository now includes scripts to perform this extraction offline
-
 # nemo-gof
 
 A Gulf of Finland (GoF) configuration for the NEMO ocean model.
