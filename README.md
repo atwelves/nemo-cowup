@@ -4,7 +4,11 @@ New branch of nemo-gof repository, as part of CoWup project.
 
 ## FABM
 
+Framework for Aquatic Biogeochemical Models
+
 ## ERGOM
+
+Ecological Regional Ocean Model
 
 ## Extracting trajectories
 
