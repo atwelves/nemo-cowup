@@ -1,6 +1,6 @@
 # nemo-cowup
 
-New branch of nemo-gof repository, as part of CoWup project.
+New branch of nemo-gof repository, as part of CoWup project. Updated to Nemo version 4.2.1
 
 ## FABM
 
