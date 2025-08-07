@@ -4,11 +4,11 @@ New branch of nemo-gof repository, as part of CoWup project.
 
 ## FABM
 
-Framework for Aquatic Biogeochemical Models
+Framework for Aquatic Biogeochemical Models, developed for NEMO-Nordic domain as part of BAL-MFC.
 
 ## ERGOM
 
-Ecological Regional Ocean Model
+Ecological Regional Ocean Model, developed for NEMO-Nordic domain as part of BAL-MFC.
 
 ## Extracting trajectories
 
