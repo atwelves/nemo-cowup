@@ -1,5 +1,7 @@
 # nemo-cowup
 
+New branch of nemo-gof repository, as part of CoWup project. Updated to Nemo version 4.2.1
+
 # nemo-gof
 
 A Gulf of Finland (GoF) configuration for the NEMO ocean model.
