@@ -19,9 +19,9 @@
 !-----------------------------------------------------------------------
 &namrun        !   parameters of the run
 !-----------------------------------------------------------------------
-   cn_exp      =  "BALgof" !  experience name
+   cn_exp      =  "IOWgof" !  experience name
    nn_it000    =   1       !  first time step
-   nn_itend    =   960     !  last  time step (std 5475)
+   nn_itend    =   19200     !  last  time step (std 5475)
    nn_date0    =  20120312 !  date at nit_0000 (format yyyymmdd) used if ln_rstart=.false. or (ln_rstart=T and nn_rstctl=0 or 1)
    nn_time0    =       0   !  initial time of day in hhmm
    nn_leapy    =       1   !  Leap year calendar (1) or not (0)
@@ -31,7 +31,7 @@
    cn_ocerst_out    = "restartout" !  suffix of ocean restart name (output)
    cn_ocerst_outdir = "./"         !  directory in which to write output ocean restarts
    ln_mskland  = .false.   !  mask land points in NetCDF outputs (costly: + ~15%)
-   nn_stock    =     960   !  frequency of creation of a restart file (modulo referenced to 1)
+   nn_stock    =     19200   !  frequency of creation of a restart file (modulo referenced to 1)
    nn_write    =     78840 !  frequency of write in the output file   (modulo referenced to nn_it000)
    nn_istate   =     0     ! output the initial state (1) or not (0)
    ln_xios_read = .true.   !  use XIOS to read restart file (only for a single file restart)

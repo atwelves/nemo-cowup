@@ -2,11 +2,11 @@ instances:
   light:
     model: gotm/light
     parameters:
-      a:  0.58       # non-visible fraction of shortwave radiation, default = 
-      g1: 0.35        # e-folding depth of non-visible fraction, default =  
-      g2: 5.0        # e-folding depth of visible fraction, default =      
+      a:  0.58       # non-visible fraction of shortwave radiation, default =
+      g1: 0.35        # e-folding depth of non-visible fraction, default =
+      g2: 5.0        # e-folding depth of visible fraction, default =
   ergom:
-    model: balmfc/ergom_cdom #bsh_ergombsh  
+    model: fmi/ergom
     parameters:
       critical_stress: 0.016
       cya0           : 4.5E-9
@@ -49,7 +49,6 @@ instances:
       r_lpp_assim    : 1.3
       r_nh4_nitrif   : 0.1
       r_pp_mort      : 0.02
-      r_pp_resp      : 0.01
       r_sed_ero      : 6.0
       r_sed_rec      : 0.002
       r_spp_assim    : 0.4
@@ -61,10 +60,10 @@ instances:
       rfr_o          : 6.875
       rfr_p          : 0.0625
       sali_max_cya   : 10.0
-      sali_min_cya   : 0.0    
+      sali_min_cya   : 0.0
       sed_max        : 4.5
       spp0           : 4.5E-9
-      temp_min_cya   : 13.5 # minimum temperature for cyanobacteria growth, deg. C ***matched to FICOS*** 
+      temp_min_cya   : 13.5 # minimum temperature for cyanobacteria growth, deg. C ***matched to FICOS***
       temp_min_spp   : 10.0
       temp_opt_zoo   : 20.0
       w_cya          : 0.1
@@ -75,33 +74,28 @@ instances:
       w_lpp          : -0.5
       w_n2_stf       : 5.0
       w_o2_stf       : 5.0
-#      w_no3_stf      : 8.3E-8 
-#      w_nh4_stf      : 6.0E-8 
-#      w_po4_stf      : 1.5E-9  
+#      w_no3_stf      : 8.3E-8
+#      w_nh4_stf      : 6.0E-8
+#      w_po4_stf      : 1.5E-9
       zoo0           : 4.5E-9
       zoo_cl         : 9.0E-8
     initialization:
       t_n2   : 520.0e-6
       t_o2   : 400.0e-6
-      t_dic  : 1500.0e-6       
+      t_dic  : 1500.0e-6
       t_alk  : 0.00150279805529863
       t_nh4  : 0.10e-6
       t_no3  : 10.50e-6
       t_po4  : 1.e-6
-      t_si   : 3.e-6      
-      t_lpp  : 0.1e-6      
+      t_lpp  : 0.1e-6
       t_spp  : 0.1e-6
-      t_cya  : 0.01e-6      
+      t_cya  : 0.01e-6
       t_zoo  : 0.01e-6
       t_h2s  : 0.01e-6
-      t_sul  : 0.01e-8            
+      t_sul  : 0.01e-8
       t_ipw  : 0.01e-6
       t_det  : 0.01e-6
-      t_detsi: 0.01e-6
-      t_fe3plus: 2.1e-9
-      t_cdom: 6.5e-6      
+      t_cdom: 6.5e-6
       t_sed  : 0.1
       t_ips  : 0.1
-      t_sedsi: 0.002
-
 

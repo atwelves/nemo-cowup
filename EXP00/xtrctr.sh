@@ -2,7 +2,7 @@
 #SBATCH --job-name=xtrctr
 #SBATCH --account=project_2002251
 #SBATCH --partition=fmi
-#SBATCH --time=01:00:00
+#SBATCH --time=72:00:00
 #SBATCH --mem-per-cpu=150G
 #SBATCH -o xtrctr_out.log
 #SBATCH -e xtrctr_err.log
@@ -13,6 +13,9 @@ module load python-data
 
 # check for any files
 
+# Experiment name
+exp="IOWgof"
+
 # define stations
 stat=("GF1"    "GF2"    "LL3A"   "LL4A"   "LL5"    "LL6A"   "LL7"    "LL9"    "LL11"   "LL12"  )
 lats=(59.70500 59.83850 60.06717 60.01683 59.91683 59.91683 59.84650 59.70017 59.58350 59.48350)
@@ -21,7 +24,7 @@ lons=(24.68217 25.85683 26.34667 26.08017 25.59700 25.03017 24.83782 24.03017 23
 sleep 5m
 
 dir="/scratch/project_2002251/twelves/nemo-gof/EXP_FABM"
-files=$(find $dir -mindepth 1 -type f -name "BALgof_1h*")
+files=$(find $dir -mindepth 1 -type f -name "$exp*")
 echo "list of files"
 echo $files
 
@@ -41,7 +44,7 @@ do
 			cp -p get_points.py get_point.py
 			sed -i.bak "s/#latitude/lat=${lats[$i]}/" get_point.py
 			sed -i.bak "s/#longitude/lon=${lons[$i]}/" get_point.py
-			new_name=${file/BALgof/${stat[$i]}}
+			new_name=${file/$exp/${stat[$i]}}
 			tmp_name="$dir/temp_file.nc"
 			py_name="$dir/output.nc"
 			mv $file $tmp_name
@@ -53,13 +56,15 @@ do
 			echo $new_name
 		done
 	done
-	files=$(find $dir -mindepth 1 -type f -name "BALgof_1h*")
+	files=$(find $dir -mindepth 1 -type f -name "$exp*")
 done
 
 for i in {0..9}
 do
+	mkdir $exp
+	cd $exp
 	mkdir station_${stat[$i]}
 	cd station_${stat[$i]}
-	mv ../${stat[$i]}* .
-	cd ..
+	mv ../..${stat[$i]}* .
+	cd ../..
 done	

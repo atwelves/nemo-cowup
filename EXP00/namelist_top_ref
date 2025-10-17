@@ -26,7 +26,7 @@
 !-----------------------------------------------------------------------
 &namtrc          !   tracers definition
 !-----------------------------------------------------------------------
-   jp_bgc        =  19           !  Number of passive tracers of the BGC model 
+   jp_bgc        =  28           !  Number of passive tracers of the BGC model 
    !
    ln_fabm       =  .true.     !  Run FABM BGC model 
    ln_pisces     =  .false.     !  Run PISCES BGC model 
@@ -58,15 +58,23 @@
    sn_tracer(9)   = 'ergom_t_h2s' ,'h2s',                                    ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
    sn_tracer(10)   = 'ergom_t_sul' ,'sul',                                   ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
    sn_tracer(11)   = 'ergom_t_alk' ,'alk',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
-   sn_tracer(12)   = 'ergom_t_fe3plus' ,'fe3plus',                           ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
-   sn_tracer(13)   = 'ergom_t_ipw' ,'ipw',                                   ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
-   sn_tracer(14)   = 'ergom_t_lpp' , 'lpp',                                  ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.   
-   sn_tracer(15)   = 'ergom_t_cya' ,'cya',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
-   sn_tracer(16)   = 'ergom_t_det' ,'det',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
-   sn_tracer(17)   = 'ergom_t_si' ,'si',                                     ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
-   sn_tracer(18)   = 'ergom_t_detsi' ,'detsi',                               ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
-   sn_tracer(19)   = 'ergom_t_cdom' ,'cdom',                                 ' '  ,       .false.  ,     .false. , .false. , .false. , .false. 
-
+   sn_tracer(12)   = 'ergom_t_sed' ,'sed',                           ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(13)   = 'ergom_t_ips' ,'ips',                                   ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
+   sn_tracer(14)   = 'ergom_t_ipw' ,'ipw',                                  ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.   
+   sn_tracer(15)   = 'ergom_t_lpp' ,'lpp',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(16)   = 'ergom_t_lip' ,'lip',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(17)   = 'ergom_t_cya' ,'cya',                                     ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
+   sn_tracer(18)   = 'ergom_t_det' ,'det',                               ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(19)   = 'ergom_t_poc' ,'poc',                                 ' '  ,       .false.  ,     .false. , .false. , .false. , .false. 
+   sn_tracer(20)   = 'ergom_t_pocp' ,'pocp',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(21)   = 'ergom_t_pocn' ,'pocn',                           ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(22)   = 'ergom_t_doc' ,'doc',                                   ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
+   sn_tracer(23)   = 'ergom_t_dop' , 'dop',                                  ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(24)   = 'ergom_t_don' ,'don',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(25)   = 'ergom_t_sed_poc' ,'sed_poc',                                   ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(26)   = 'ergom_t_sed_pocn' ,'sed_pocn',                                     ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
+   sn_tracer(27)   = 'ergom_t_sed_pocp' ,'sed_pocp',                               ' '  ,       .false.  ,     .false. , .false.  , .false.  , .false.
+   sn_tracer(28)   = 'ergom_t_cdom' ,'cdom',                                 ' '  ,       .false.  ,     .false. , .false. , .false. , .false.
 /
 !-----------------------------------------------------------------------
 &namage          !   AGE 
