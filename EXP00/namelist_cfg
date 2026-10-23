@@ -115,6 +115,7 @@
    sn_prec     = 'dum_12_947_400', -1    , 'sdum'    ,   .true.     , .true.  , 'yearly' , ''  , '' , ''
    sn_snow     = 'dum_12_947_400', -1    , 'sdum'    ,   .true.     , .true.  , 'yearly' , ''  , '' , ''
    sn_slp      = 'rcrhnd',          6    , 'MSL'     ,   .true.     , .false. , 'daily'  , 'weights_bilin_rcrhndv74_gofext'  , ''       , ''
+/
 !-----------------------------------------------------------------------
 &namtra_qsr    !   penetrative solar radiation                          (ln_traqsr =T)
 !-----------------------------------------------------------------------
